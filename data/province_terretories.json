@@ -1,0 +1,233 @@
+{
+    "data": [
+      {
+        "year": 2004,
+        "students": {
+          "Newfoundland and Labrador": 565,
+          "Prince Edward Island": 180,
+          "Nova Scotia": 3370,
+          "New Brunswick": 1765,
+          "Quebec": 18090,
+          "Ontario": 48475,
+          "Manitoba": 3535,
+          "Saskatchewan": 2325,
+          "Alberta": 9230,
+          "British Columbia": 39250,
+          "Northwest Territories": 35,
+          "Nunavut": 10,
+          "Yukon": 30,
+          "Province/Territory not stated": 755
+        }
+      },
+      {
+        "year": 2005,
+        "students": {
+          "Newfoundland and Labrador": 670,
+          "Prince Edward Island": 185,
+          "Nova Scotia": 3235,
+          "New Brunswick": 1835,
+          "Quebec": 17235,
+          "Ontario": 46610,
+          "Manitoba": 3295,
+          "Saskatchewan": 2535,
+          "Alberta": 9240,
+          "British Columbia": 39780,
+          "Northwest Territories": 45,
+          "Nunavut": null,
+          "Yukon": 25,
+          "Province/Territory not stated": 580
+        }
+      },
+      {
+        "year": 2006,
+        "students": {
+          "Newfoundland and Labrador": 695,
+          "Prince Edward Island": 220,
+          "Nova Scotia": 3195,
+          "New Brunswick": 1755,
+          "Quebec": 18780,
+          "Ontario": 44260,
+          "Manitoba": 3185,
+          "Saskatchewan": 2165,
+          "Alberta": 8925,
+          "British Columbia": 39220,
+          "Northwest Territories": 30,
+          "Nunavut": 0,
+          "Yukon": 25,
+          "Province/Territory not stated": 665
+        }
+      },
+      {
+        "year": 2007,
+        "students": {
+          "Newfoundland and Labrador": 935,
+          "Prince Edward Island": 290,
+          "Nova Scotia": 3465,
+          "New Brunswick": 1885,
+          "Quebec": 19435,
+          "Ontario": 46950,
+          "Manitoba": 3335,
+          "Saskatchewan": 2270,
+          "Alberta": 9920,
+          "British Columbia": 42650,
+          "Northwest Territories": 20,
+          "Nunavut": 0,
+          "Yukon": 35,
+          "Province/Territory not stated": 1300
+        }
+      },
+      {
+        "year": 2008,
+        "students": {
+          "Newfoundland and Labrador": 880,
+          "Prince Edward Island": 345,
+          "Nova Scotia": 3590,
+          "New Brunswick": 1920,
+          "Quebec": 18595,
+          "Ontario": 45915,
+          "Manitoba": 3050,
+          "Saskatchewan": 2170,
+          "Alberta": 9905,
+          "British Columbia": 41650,
+          "Northwest Territories": 25,
+          "Nunavut": null,
+          "Yukon": 30,
+          "Province/Territory not stated": 780
+        }
+      },
+      {
+        "year": 2009,
+        "students": {
+          "Newfoundland and Labrador": 880,
+          "Prince Edward Island": 430,
+          "Nova Scotia": 4070,
+          "New Brunswick": 2050,
+          "Quebec": 21875,
+          "Ontario": 55630,
+          "Manitoba": 3570,
+          "Saskatchewan": 2485,
+          "Alberta": 10845,
+          "British Columbia": 45975,
+          "Northwest Territories": 10,
+          "Nunavut": null,
+          "Yukon": 30,
+          "Province/Territory not stated": 750
+        }
+      },
+      {
+        "year": 2010,
+        "students": {
+          "Newfoundland and Labrador": 875,
+          "Prince Edward Island": 400,
+          "Nova Scotia": 4820,
+          "New Brunswick": 2125,
+          "Quebec": 21925,
+          "Ontario": 61350,
+          "Manitoba": 3505,
+          "Saskatchewan": 2405,
+          "Alberta": 10835,
+          "British Columbia": 46080,
+          "Northwest Territories": 20,
+          "Nunavut": null,
+          "Yukon": 20,
+          "Province/Territory not stated": 1440
+        }
+      },
+      {
+        "year": 2011,
+        "students": {
+          "Newfoundland and Labrador": 925,
+          "Prince Edward Island": 380,
+          "Nova Scotia": 5045,
+          "New Brunswick": 2030,
+          "Quebec": 23235,
+          "Ontario": 69145,
+          "Manitoba": 3475,
+          "Saskatchewan": 2405,
+          "Alberta": 10645,
+          "British Columbia": 49870,
+          "Northwest Territories": 20,
+          "Nunavut": null,
+          "Yukon": 35,
+          "Province/Territory not stated": 725
+        }
+      },
+      {
+        "year": 2012,
+        "students": {
+          "Newfoundland and Labrador": 1035,
+          "Prince Edward Island": 375,
+          "Nova Scotia": 4965,
+          "New Brunswick": 1995,
+          "Quebec": 26045,
+          "Ontario": 74475,
+          "Manitoba": 3555,
+          "Saskatchewan": 2420,
+          "Alberta": 10460,
+          "British Columbia": 51635,
+          "Northwest Territories": 20,
+          "Nunavut": null,
+          "Yukon": 30,
+          "Province/Territory not stated": 10
+        }
+      },
+      {
+        "year": 2013,
+        "students": {
+          "Newfoundland and Labrador": 1110,
+          "Prince Edward Island": 460,
+          "Nova Scotia": 4800,
+          "New Brunswick": 2005,
+          "Quebec": 26860,
+          "Ontario": 83950,
+          "Manitoba": 4180,
+          "Saskatchewan": 2815,
+          "Alberta": 11125,
+          "British Columbia": 55555,
+          "Northwest Territories": 25,
+          "Nunavut": null,
+          "Yukon": 25,
+          "Province/Territory not stated": 15
+        }
+      },
+      {
+        "year": 2014,
+        "students": {
+          "Newfoundland and Labrador": 1325,
+          "Prince Edward Island": 610,
+          "Nova Scotia": 5315,
+          "New Brunswick": 2150,
+          "Quebec": 29250,
+          "Ontario": 89030,
+          "Manitoba": 4740,
+          "Saskatchewan": 2840,
+          "Alberta": 11860,
+          "British Columbia": 59220,
+          "Northwest Territories": 15,
+          "Nunavut": null,
+          "Yukon": 25,
+          "Province/Territory not stated": 35
+        }
+      },
+      {
+        "year": 2015,
+        "students": {
+          "Newfoundland and Labrador": 1655,
+          "Prince Edward Island": 910,
+          "Nova Scotia": 6330,
+          "New Brunswick": 2310,
+          "Quebec": 30520,
+          "Ontario": 97345,
+          "Manitoba": 6895,
+          "Saskatchewan": 3895,
+          "Alberta": 14430,
+          "British Columbia": 58275,
+          "Northwest Territories": 15,
+          "Nunavut": null,
+          "Yukon": 35,
+          "Province/Territory not stated": 80
+        }
+      }
+    ]
+  }
+  

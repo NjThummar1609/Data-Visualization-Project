@@ -1,0 +1,23 @@
+{
+  "data": [
+    {
+      "year": 2015,
+      "students": {
+        "Newfoundland and Labrador": 1655,
+        "Prince Edward Island": 910,
+        "Nova Scotia": 6330,
+        "New Brunswick": 2310,
+        "Quebec": 30520,
+        "Ontario": 97345,
+        "Manitoba": 6895,
+        "Saskatchewan": 3895,
+        "Alberta": 14430,
+        "British Columbia": 58275,
+        "Northwest Territories": 15,
+        "Nunavut": null,
+        "Yukon": 35,
+        "Province/Territory not stated": 80
+      }
+    }
+  ]
+}

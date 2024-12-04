@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>D3.js Pie Chart</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+
+  <body>
+    <header>
+        <nav
+          class="navbar navbar-expand-lg navbar-dark"
+          style="background-color: #000000"
+        >
+          <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="Index.html">Charts</a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="index.html">Bar Chart</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="bubble.html">Bubble Chart</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="lineChart.html">Line Chart</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="scatter.html">Scatter Chart</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="donut.html">Donut Chart</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="pie.html">Pie Chart</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <main>
+        <h1>Number Of international students by Provinces in the year 2015</h1>
+            <p>Chart Type: <span>Pie chart</span></p>
+          <div id="pie-chart-container"></div>
+      </main>
+
+    <script>
+      // Your data
+      const data = {
+        data: [
+                {
+            "year": 2015,
+            "students": {
+                "Newfoundland and Labrador": 1655,
+                "Prince Edward Island": 910,
+                "Nova Scotia": 6330,
+                "New Brunswick": 2310,
+                "Quebec": 30520,
+                "Ontario": 97345,
+                "Manitoba": 6895,
+                "Saskatchewan": 3895,
+                "Alberta": 14430,
+                "British Columbia": 58275,
+                "Northwest Territories": 15,
+                "Nunavut": null,
+                "Yukon": 35,
+                "Province/Territory not stated": 80
+            }
+            }
+        ],
+      };
+
+      // Extracting the data for a specific year
+      const selectedYearData = data.data.find((entry) => entry.year === 2015);
+      if (!selectedYearData || !selectedYearData.students) {
+        console.error("Invalid data format");
+        // Handle the error appropriately
+      } else {
+        const provinces = Object.keys(selectedYearData.students);
+        const studentCounts = Object.values(selectedYearData.students);
+
+        // Set up the SVG container dimensions
+        const width = 600;
+        const height = 400;
+
+        // Create the SVG container
+        const svg = d3
+          .select("#pie-chart-container")
+          .append("svg")
+          .attr("width", width)
+          .attr("height", height);
+
+        // Create a pie chart layout
+        const pie = d3.pie();
+
+        // Create an arc generator
+        const arc = d3
+          .arc()
+          .innerRadius(0)
+          .outerRadius(Math.min(width, height) / 2 - 50);
+
+        // Create color scale
+        const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+        // Create arcs for each data point
+        const arcs = pie(studentCounts);
+
+        // Draw arcs
+        svg
+          .selectAll("path")
+          .data(arcs)
+          .enter()
+          .append("path")
+          .attr("d", arc)
+          .attr("fill", (d, i) => color(i))
+          .attr("stroke", "#fff")
+          .style("stroke-width", "2px")
+          .attr("transform", `translate(${width / 2},${height / 2})`);
+
+        // Add legend
+        const legend = svg
+          .selectAll(".legend")
+          .data(provinces)
+          .enter()
+          .append("g")
+          .attr("class", "legend")
+          .attr(
+            "transform",
+            (d, i) => `translate(${width - 120},${i * 20 + 20})`
+          );
+
+        legend
+          .append("rect")
+          .attr("width", 18)
+          .attr("height", 18)
+          .style("fill", (d, i) => color(i));
+
+        legend
+          .append("text")
+          .attr("x", 24)
+          .attr("y", 9)
+          .attr("dy", ".35em")
+          .style("text-anchor", "start")
+          .text((d) => d);
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+  </body>
+</html>

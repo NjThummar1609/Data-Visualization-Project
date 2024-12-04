@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/style.css">
+        <style>
+            .grid line {
+                stroke: lightgrey;
+                stroke-opacity: 0.7;
+                shape-rendering: crispEdges;
+            }
+            .grid path {
+                stroke-width: 0;
+            }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .grid line {
+            stroke: lightgrey;
+            stroke-opacity: 0.7;
+            shape-rendering: crispEdges;
+        }
+
+        .grid path {
+            stroke-width: 0;
+        }
+
+        svg {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+        }
+
+        text {
+            font-size: 12px;
+        }
+
+        .legend {
+            font-size: 14px;
+        }
+
+        #currentYearLabel {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        input[type=range] {
+            width: 48%;
+            margin: 10px 0;
+        }
+
+
+        </style>
+    </head>
+    <body>
+        <header>
+            <nav
+              class="navbar navbar-expand-lg navbar-dark"
+              style="background-color: #000000"
+            >
+              <div class="container-fluid">
+                <a class="navbar-brand fw-bold" href="Index.html">Charts</a>
+                <button
+                  class="navbar-toggler"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#navbarNav"
+                  aria-controls="navbarNav"
+                  aria-expanded="false"
+                  aria-label="Toggle navigation"
+                >
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="index.html">Bar Chart</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="bubble.html">Bubble Chart</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="lineChart.html">Line Chart</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="scatter.html">Scatter Chart</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="donut.html">Donut Chart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pie.html">Pie Chart</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          </header>
+          
+          <main>
+            <h1>Life Expectancy</h1>
+            <p>Chart Type: <span>Bubble chart</span></p>
+              <div>
+                  <button id="decrement">-</button>
+                  <label style="text-align: center;" id="currentYearLabel"></label>
+                  <button id="increment">+</button>
+              </div>
+              <div>
+                  <input type="range" id="slider"></input>
+              </div>
+          </main>
+        
+        <script src="lib/d3.js"></script>
+        <script src="lib/d3-selection-multi.v1.js"></script>
+		<script type="text/javascript">
+            var svgWidth=800, svgHeight=600;
+
+            var minBubbleSize = 10, maxBubbleSize = 50;
+
+            var outerAxisPadding = 30, yAxisWidth=20, xAxisHeight=20;
+            var margins = {
+                left: outerAxisPadding + yAxisWidth, 
+                top: outerAxisPadding,
+                bottom: outerAxisPadding + xAxisHeight, 
+                right: outerAxisPadding
+            };
+
+            var graphArea = {
+                left: margins.left + maxBubbleSize / 2,
+                top: margins.top + maxBubbleSize / 2,
+                right: svgWidth - margins.right - maxBubbleSize /2,
+                bottom: svgHeight - margins.bottom - maxBubbleSize /2,
+                width: 0,
+                height: 0
+            };
+
+            graphArea.width = graphArea.right - graphArea.left;
+            graphArea.height = graphArea.bottom - graphArea.top;
+
+            var svg = d3.select('body')
+                .append('svg')
+                .attrs({ width: svgWidth, height: svgHeight });
+
+            loadData(function(allYearsData){
+                nested = d3.nest()
+                    .key(function (d) { return d.Year; })
+                    .map(allYearsData);
+
+                years = allYearsData.map(function(d) { return d.Year});
+                minYear = d3.min(years);
+                maxYear = d3.max(years);
+                currentYear = minYear;
+
+                renderAxes(allYearsData);
+
+                bubblesGroup = svg.append('g')
+                    .attr('transform', 'translate(' + graphArea.left + ',' + graphArea.top + ')')
+                    .attr('width', graphArea.width)
+                    .attr('height', graphArea.height);
+
+                renderLegend(allYearsData);
+
+                slider = d3.select("input#slider");
+                slider.attrs({
+                    "min": minYear,
+                    "max": maxYear,
+                    "value": currentYear
+                });
+                console.log(slider);
+
+                update(currentYear, nested.get(currentYear));
+            });
+                
+            d3.select("button#increment").on("click", 
+                function handleClick(){
+                    if (++currentYear >= maxYear) currentYear = maxYear
+                    update(currentYear, nested.get(currentYear));
+                });
+            d3.select("button#decrement").on("click", 
+                function handleClick(){
+                    if (--currentYear < minYear) currentYear = minYear
+                    update(currentYear, nested.get(currentYear));
+                });
+            d3.select("input#slider").on("input", 
+                function handleClick(){
+                    currentYear = this.value;
+                    update(currentYear, nested.get(this.value));
+                });
+
+            function update(year, data){
+                console.log("rendering: " + year);
+
+                d3.select("label#currentYearLabel").html(year);
+
+                selection = bubblesGroup.selectAll('circle')
+                        .data(data, function (d) { return d.CountryCode; });
+
+                entering = selection
+                    .enter()
+                    
+                    .append('circle')
+                    .merge(selection)
+                    .attrs(function (d){
+                        return {
+                            cx: xScale(d.LifeExp),
+                            cy: yScale(d.FertRate),
+                            r: popScale(d.Population),
+                            fill: regionColorMap(d.Region),
+                            stroke: 'black'
+                        };
+                    });
+
+                exiting = selection
+                    .exit()
+                    
+                    .remove();
+            }
+
+            function loadData(onLoadComplete){
+                d3.csv("data/chart_data.csv",
+                function (error, rawData) {
+                    var allYearsData = rawData.map(function (d) {
+                        return {
+                            CountryCode: d.CountryCode,
+                            CountryName: d.CountryName,
+                            LifeExp: +d.LifeExp,
+                            FertRate: +d.FertRate,
+                            Population: +d.Population,
+                            Region: d.Region,
+                            Year: +d.Year
+                        }});
+                    onLoadComplete(allYearsData);
+                })};
+
+
+            function renderAxes(allData){
+                var lifeExpectancies = allData.map(function(d) { return d.LifeExp; });
+                xScale = d3.scaleLinear()
+                    .domain([0, d3.max(lifeExpectancies)])
+                    .range([0, graphArea.width]);
+
+                var fertRates = allData.map(function(d) { return d.FertRate; });
+                yScale = d3.scaleLinear()
+                    .domain([d3.max(fertRates), 0])
+                    .range([0, graphArea.height]);
+                    
+                var populations = allData.map(function(d) { return d.Population; });
+                popScale = d3.scaleLinear()
+                    .domain([d3.min(populations), d3.max(populations)])
+                    .range([minBubbleSize, maxBubbleSize]);
+
+                var xAxis = d3.axisBottom().scale(xScale);
+                var yAxis = d3.axisLeft().scale(yScale);
+
+                var yAxisNodes = svg.append('g')
+                    .attr('transform', 'translate(' + margins.left + ',' + graphArea.top + ')')
+                    .call(yAxis);                    
+                var xAxisNodes = svg.append('g')
+                    .attr('transform', 'translate(' + graphArea.left + ',' + (svgHeight - margins.bottom) + ')')
+                    .call(xAxis);
+
+                svg.append('g')
+                    .call(yAxis.tickFormat("").tickSize(-graphArea.width - maxBubbleSize/2))
+                    .attr('transform', 'translate(' + margins.left + ',' + graphArea.top +')')
+                    .attr('class', 'grid');
+
+                svg.append('g')
+                    .call(xAxis.tickFormat("").tickSize(-graphArea.height - maxBubbleSize/2))
+                    .attr('transform', 'translate(' + graphArea.left + ',' + (graphArea.bottom + maxBubbleSize/2) +')')
+                    .attr('class', 'grid');
+
+                svg.append("text")
+                    .attr("transform", "translate(" + (graphArea.left + graphArea.width / 2) + " ," + (svgHeight - 15) + ")")
+                    .style("text-anchor", "middle")
+                    .text("Life Expectancy");
+
+                svg.append("text")
+                    .attr("transform", "rotate(90)")
+                    .attr("y", -30)
+                    .attr("x", graphArea.top + graphArea.height / 2)
+                    .attr("dy", "1em")
+                    .style("text-anchor", "middle")
+                    .text("Fertility Rate");    
+            }
+
+            function renderLegend(allData) {
+                regionColorMap = d3.scaleOrdinal(d3.schemeCategory10)
+                    .domain(d3.set(allData.map(function(d) { return d.Region; })).values());
+                var legendGroup = svg.append('g')
+                    .attr('transform', 'translate(' + graphArea.left + ',' + graphArea.top + ')');
+
+                var legendBox = legendGroup
+                    .append('rect')
+                    .attrs({
+                        fill: 'white',
+                        stroke: 'black',
+                        width: 300,
+                        height: regionColorMap.domain().length * 25 + 10,
+                        'fill-opacity': 0.5
+                    });
+                var subLegendGroup = legendGroup.append('g');
+                var legendSubGroups = subLegendGroup.selectAll('rect')
+                    .data(regionColorMap.domain())
+                    .enter()
+                    .append('g')
+                    .attr('transform', function (d,i){
+                        return 'translate(10,' + ((i*25)+5) + ')';
+                    });
+                    
+                legendSubGroups
+                    .append('rect')
+                    .attrs({
+                        x:0, y:0, 
+                        width: 20, height: 20,
+                        fill: function (d,i){
+                            return regionColorMap(d);
+                        }
+                    });
+
+                var legendTexts = legendSubGroups
+                    .append('text')
+                    .text(function (d) { return d; })
+                    .attrs({
+                        x: 25,
+                        y: 15
+                    });
+
+                var max = d3.max(legendTexts.nodes(),
+                    n=> n.getComputedTextLength());
+
+                legendBox.attr('width', max+25+20);
+            }
+
+            function styleAxisNodes(axisNodes) {
+                axisNodes.selectAll('.domain')
+                    .attr({
+                        fill: 'none',
+                        'stroke-width': 1,
+                        stroke: 'black'
+                    });
+                axisNodes.selectAll('.tick line')
+                    .attr({
+                        fill: 'none',
+                        'stroke-width': 1,
+                        stroke: 'black'
+                    });
+            }
+		</script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    </body>
+</html>

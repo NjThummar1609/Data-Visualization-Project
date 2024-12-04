@@ -1,0 +1,11 @@
+[
+    { "category": "Housing", "percentage": 30 },
+    { "category": "Transportation", "percentage": 20 },
+    { "category": "Food", "percentage": 15 },
+    { "category": "Entertainment", "percentage": 10 },
+    { "category": "Utilities", "percentage": 8 },
+    { "category": "Healthcare", "percentage": 7 },
+    { "category": "Education", "percentage": 5 },
+    { "category": "Savings", "percentage": 5 }
+  ]
+  
